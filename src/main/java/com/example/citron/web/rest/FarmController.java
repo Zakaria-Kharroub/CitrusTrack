@@ -7,10 +7,9 @@ import com.example.citron.web.vm.FarmVM;
 import com.example.citron.web.vm.mapper.FarmMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/farm")
@@ -30,4 +29,13 @@ public class FarmController {
         FarmDTO farmDTO = farmMapper.toDTO(savedFarm);
         return new ResponseEntity<>(farmDTO, HttpStatus.CREATED);
     }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<FarmDTO> findById(@PathVariable UUID id){
+        Farm farm = farmService.findById(id.toString());
+        FarmDTO farmDTO = farmMapper.toDTO(farm);
+        return new ResponseEntity<>(farmDTO, HttpStatus.OK);
+    }
+
+
 }
