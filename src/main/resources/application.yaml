@@ -1,0 +1,19 @@
+spring:
+  docker:
+    compose:
+      file: src/main/docker/compose.yaml
+      enabled: true
+      lifecycle-management: start_only
+  liquibase:
+    enabled: true
+    change-log: db/changelog/master.yaml
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public
+        open-in-view: false
+        show_sql: true
+
+
+#  port: 8080  # Change this to your desired port
