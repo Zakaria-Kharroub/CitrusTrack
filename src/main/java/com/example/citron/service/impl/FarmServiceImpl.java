@@ -29,4 +29,15 @@ public class FarmServiceImpl implements FarmService {
                 .orElseThrow(()->new FarmNotFoundException("farm not found"));
     }
 
+    @Override
+    public Farm update(UUID id, Farm farm) {
+        Farm existingFarm = farmRepository.findById(id)
+                .orElseThrow(()->new FarmNotFoundException("farm not found"));
+
+        existingFarm.setName(farm.getName());
+        existingFarm.setLocation(farm.getLocation());
+        existingFarm.setTotalArea(farm.getTotalArea());
+        return farmRepository.save(existingFarm);
+    }
+
 }

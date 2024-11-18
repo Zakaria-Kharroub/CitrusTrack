@@ -37,5 +37,16 @@ public class FarmController {
         return new ResponseEntity<>(farmDTO, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FarmDTO> update(@PathVariable UUID id,@RequestBody FarmVM farmVM){
+        Farm farm = farmMapper.toEntity(farmVM);
+        Farm updatedFarm = farmService.update(id,farm);
+        FarmDTO farmDTO = farmMapper.toDTO(updatedFarm);
+        return ResponseEntity.ok(farmDTO);
+    }
+
+
+
+
 
 }

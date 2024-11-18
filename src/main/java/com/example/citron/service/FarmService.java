@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface FarmService {
     Farm save(Farm farm);
     Farm findById(String id);
+    Farm update(UUID id, Farm farm);
 }
