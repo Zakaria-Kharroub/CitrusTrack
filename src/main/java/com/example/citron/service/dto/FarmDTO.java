@@ -1,19 +1,17 @@
 package com.example.citron.service.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class FarmDTO {
+    private UUID id;
     private String name;
     private String location;
     private Double totalArea;
     private LocalDate creationDate;
+    private List<FieldDTO> fields;
 }

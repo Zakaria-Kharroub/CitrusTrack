@@ -32,4 +32,8 @@ public class Farm {
     @OneToMany(mappedBy = "farm")
     private List<Harvest> harvests;
 
+    public boolean isValidArea(double fieldAreaSum) {
+        return fieldAreaSum < this.totalArea;
+    }
+
 }
