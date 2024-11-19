@@ -9,20 +9,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
 //    Farm
-    @ExceptionHandler(FarmNotFoundException.class)
-    public ResponseEntity<String> handleFarmNotFoundException(FarmNotFoundException ex){
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
+@ExceptionHandler(FarmNotFoundException.class)
+public ResponseEntity<Map<String, String>> handleFarmNotFoundException(FarmNotFoundException ex) {
+    Map<String, String> errorResponse = new HashMap<>();
+    errorResponse.put("message", ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+}
 
 //    Field
 
     @ExceptionHandler(FieldNotFoundException.class)
-    public ResponseEntity<String> handleFieldNotFoundException(FieldNotFoundException ex){
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, String>> handleFieldNotFoundException(FieldNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(FieldAreaSuperieurCinquanteException.class)

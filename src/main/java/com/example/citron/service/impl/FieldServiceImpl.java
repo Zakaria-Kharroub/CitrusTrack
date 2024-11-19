@@ -50,6 +50,6 @@ public class FieldServiceImpl implements FieldService {
 
     public Field findById(String id) {
         return fieldRepository.findById(UUID.fromString(id))
-                .orElseThrow(()->new FieldNotFoundException("field not found"));
+                .orElseThrow(()-> new FieldNotFoundException("field not found"));
     }
 }
