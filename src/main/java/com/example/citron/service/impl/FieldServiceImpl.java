@@ -6,6 +6,7 @@ import com.example.citron.repository.FieldRepository;
 import com.example.citron.service.FarmService;
 import com.example.citron.service.FieldService;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
+import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +27,12 @@ public class FieldServiceImpl implements FieldService {
         if (farm == null) {
             throw new FarmNotFoundException("farm not found");
         }
+
+        if(field.getArea() > farm.getTotalArea() *0.5){
+            throw  new FieldAreaSuperieurCinquanteException("area superieur 50% de farm area");
+        }
+
+
         field.setFarm(farm);
         return fieldRepository.save(field);
     }
