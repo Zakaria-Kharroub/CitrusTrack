@@ -7,6 +7,9 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+//je veux dans save de field checker dans Field service avant save que area de field inferieur de total area de farm comme ce
+//if(farm.getarea)
+
 
 @Entity
 @Getter
