@@ -7,8 +7,11 @@ import com.example.citron.service.FarmService;
 import com.example.citron.service.FieldService;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
+import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class FieldServiceImpl implements FieldService {
@@ -42,5 +45,11 @@ public class FieldServiceImpl implements FieldService {
 
         field.setFarm(farm);
         return fieldRepository.save(field);
+    }
+
+
+    public Field findById(String id) {
+        return fieldRepository.findById(UUID.fromString(id))
+                .orElseThrow(()->new FieldNotFoundException("field not found"));
     }
 }
