@@ -40,6 +40,14 @@ public class FieldController {
         return new ResponseEntity<>(fieldDTO, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FieldDTO> update(@PathVariable UUID id, @Valid @RequestBody FieldVM fieldVM) {
+        Field field = fieldMapper.toEntity(fieldVM);
+        Field updatedField = fieldService.update(id, field);
+        FieldDTO fieldDTO = fieldMapper.toDTO(updatedField);
+        return ResponseEntity.ok(fieldDTO);
+    }
+
 
 
 
