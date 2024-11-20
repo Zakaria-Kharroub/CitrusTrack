@@ -11,3 +11,4 @@ public class FieldVM {
     private Double area;
     private UUID farmId;
 }
+
