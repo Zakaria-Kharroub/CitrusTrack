@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FarmDTO {
+    private String id;
     private String name;
     private String location;
     private Double totalArea;

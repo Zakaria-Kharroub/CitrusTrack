@@ -1,5 +1,6 @@
 package com.example.citron.web.errors;
 
+import com.example.citron.web.errors.farm.FarmFieldLimitException;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
@@ -16,12 +17,24 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 //    Farm
-@ExceptionHandler(FarmNotFoundException.class)
-public ResponseEntity<Map<String, String>> handleFarmNotFoundException(FarmNotFoundException ex) {
-    Map<String, String> errorResponse = new HashMap<>();
-    errorResponse.put("message", ex.getMessage());
-    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-}
+    @ExceptionHandler(FarmNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleFarmNotFoundException(FarmNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FarmFieldLimitException.class)
+    public ResponseEntity<Map<String,String>> handleFarmFieldLimitException(FarmFieldLimitException ex){
+        Map<String,String> errorResponse = new HashMap<>();
+        errorResponse.put("message",ex.getMessage());
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+
+
+
+
+
 
 //    Field
 

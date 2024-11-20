@@ -5,6 +5,7 @@ import com.example.citron.domaine.Field;
 import com.example.citron.repository.FieldRepository;
 import com.example.citron.service.FarmService;
 import com.example.citron.service.FieldService;
+import com.example.citron.web.errors.farm.FarmFieldLimitException;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
@@ -32,9 +33,15 @@ public class FieldServiceImpl implements FieldService {
             throw new FarmNotFoundException("farm not found");
         }
 
+        if (farm.getFields().size()>10){
+            throw new FarmFieldLimitException("farm contein pas plus de 10 fields");
+        }
+
         if(field.getArea() > farm.getTotalArea() *0.5){
             throw  new FieldAreaSuperieurCinquanteException("area superieur 50% de farm area");
         }
+
+
 
         double totalFieldArea = farm.getFields().stream()
                         .mapToDouble(Field::getArea).sum();
