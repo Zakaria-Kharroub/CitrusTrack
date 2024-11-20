@@ -38,6 +38,18 @@ public class Tree {
         return Period.between(plantingDate,LocalDate.now()).getYears();
     }
 
+    public double calculPrductivite(){
+        int age = calculAge();
+        if (age <3){
+            return 2.5;
+        } else if (age <=10) {
+            return 12.0;
+        } else if (age <=20) {
+            return 20.0;
+        }
+        return 0;
+    }
+
 
 
 
