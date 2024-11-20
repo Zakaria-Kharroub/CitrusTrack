@@ -5,10 +5,14 @@ import com.example.citron.domaine.Field;
 import com.example.citron.repository.FieldRepository;
 import com.example.citron.service.FarmService;
 import com.example.citron.service.FieldService;
+import com.example.citron.web.errors.farm.FarmFieldLimitException;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
+import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class FieldServiceImpl implements FieldService {
@@ -29,9 +33,15 @@ public class FieldServiceImpl implements FieldService {
             throw new FarmNotFoundException("farm not found");
         }
 
+        if (farm.getFields().size()>10){
+            throw new FarmFieldLimitException("farm contein pas plus de 10 fields");
+        }
+
         if(field.getArea() > farm.getTotalArea() *0.5){
             throw  new FieldAreaSuperieurCinquanteException("area superieur 50% de farm area");
         }
+
+
 
         double totalFieldArea = farm.getFields().stream()
                         .mapToDouble(Field::getArea).sum();
@@ -42,5 +52,40 @@ public class FieldServiceImpl implements FieldService {
 
         field.setFarm(farm);
         return fieldRepository.save(field);
+    }
+
+
+    public Field findById(String id) {
+        return fieldRepository.findById(UUID.fromString(id))
+                .orElseThrow(()-> new FieldNotFoundException("field not found"));
+    }
+
+
+    @Override
+    public Field update(UUID id, Field field) {
+        Field existingField = fieldRepository.findById(id)
+                .orElseThrow(() -> new FieldNotFoundException("field not found"));
+
+        Farm farm = farmService.findById(field.getFarm().getId().toString());
+        if (farm == null){
+            throw new FarmNotFoundException("farm not found");
+        }
+
+        if (field.getArea() > farm.getTotalArea()* 0.5){
+            throw new FieldAreaSuperieurCinquanteException("area superieur 50% de farm area");
+        }
+
+        double totalFieldArea = farm.getFields().stream()
+                .mapToDouble(Field::getArea).sum();
+
+        if (totalFieldArea + field.getArea() - existingField.getArea() > farm.getTotalArea()){
+            throw new TotalFieldAreaExceedsFarmAreaException("total field area exceeds farm area");
+            
+        }
+
+        existingField.setArea(field.getArea());
+        existingField.setFarm(farm);
+        return fieldRepository.save(existingField);
+
     }
 }
