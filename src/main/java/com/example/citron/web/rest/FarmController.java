@@ -23,7 +23,7 @@ public class FarmController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<FarmDTO> save(@RequestBody FarmVM farmVM){
+    public ResponseEntity<FarmDTO> save(@RequestBody FarmVM farmVM) {
         Farm farm = farmMapper.toEntity(farmVM);
         Farm savedFarm = farmService.save(farm);
         FarmDTO farmDTO = farmMapper.toDTO(savedFarm);

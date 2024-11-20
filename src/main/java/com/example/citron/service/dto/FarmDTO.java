@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FarmDTO {
-    private String id;
+    private UUID id;
     private String name;
     private String location;
     private Double totalArea;

@@ -31,13 +31,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
-
-
-
-
-
 //    Field
-
     @ExceptionHandler(FieldNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleFieldNotFoundException(FieldNotFoundException ex) {
         Map<String, String> errorResponse = new HashMap<>();
