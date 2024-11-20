@@ -1,12 +1,21 @@
 package com.example.citron.domaine;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tree {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,6 +28,17 @@ public class Tree {
 
     @OneToMany(mappedBy = "tree")
     private List<HarvestDetail> harvestDetails;
+
+
+
+    public int calculAge(){
+        if (plantingDate == null){
+            return 0;
+        }
+        return Period.between(plantingDate,LocalDate.now()).getYears();
+    }
+
+
 
 
 }

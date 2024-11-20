@@ -5,6 +5,7 @@ import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
+import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,13 +32,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
-
-
-
-
-
 //    Field
-
     @ExceptionHandler(FieldNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleFieldNotFoundException(FieldNotFoundException ex) {
         Map<String, String> errorResponse = new HashMap<>();
@@ -52,6 +47,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TotalFieldAreaExceedsFarmAreaException.class)
     public ResponseEntity<String> handleTotalFieldAreaExceedsFarmAreaException(TotalFieldAreaExceedsFarmAreaException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+//    tree
+    @ExceptionHandler(NoSpaceException.class)
+    public ResponseEntity<String> handleNoSpaceException(NoSpaceException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
 }
