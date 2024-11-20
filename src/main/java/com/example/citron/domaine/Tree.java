@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,9 +30,13 @@ public class Tree {
     private List<HarvestDetail> harvestDetails;
 
 
-//    public int getAge() {
-//        return LocalDate.now().getYear() - plantingDate.getYear();
-//    }
+
+    public int calculAge(){
+        if (plantingDate == null){
+            return 0;
+        }
+        return Period.between(plantingDate,LocalDate.now()).getYears();
+    }
 
 
 
