@@ -8,10 +8,9 @@ import com.example.citron.web.vm.mapper.FieldMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/field")
@@ -32,4 +31,26 @@ public class FieldController {
         FieldDTO fieldDTO = fieldMapper.toDTO(savedField);
         return new ResponseEntity<>(fieldDTO, HttpStatus.CREATED);
     }
+
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<FieldDTO> findById(@PathVariable UUID id){
+        Field field = fieldService.findById(id.toString());
+        FieldDTO fieldDTO = fieldMapper.toDTO(field);
+        return new ResponseEntity<>(fieldDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FieldDTO> update(@PathVariable UUID id, @Valid @RequestBody FieldVM fieldVM) {
+        Field field = fieldMapper.toEntity(fieldVM);
+        Field updatedField = fieldService.update(id, field);
+        FieldDTO fieldDTO = fieldMapper.toDTO(updatedField);
+        return ResponseEntity.ok(fieldDTO);
+    }
+
+
+
+
+
+
 }
