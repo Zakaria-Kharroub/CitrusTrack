@@ -6,6 +6,7 @@ import com.example.citron.repository.TreeRepository;
 import com.example.citron.service.FieldService;
 import com.example.citron.service.TreeService;
 import com.example.citron.web.errors.field.FieldNotFoundException;
+import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,17 @@ public class TreeServiceImpl implements TreeService {
         if (field == null){
             throw new FieldNotFoundException("field not found");
         }
+
+
+//        check space if aviable ou non
+
+        double maxTrees = field.getArea() / 100;
+        long treesCount = treeRepository.countByFieldId(field.getId());
+        if (treesCount >= maxTrees){
+            throw new NoSpaceException("no space for tree");
+        }
+
+
         tree.setField(field);
         return treeRepository.save(tree);
     }
