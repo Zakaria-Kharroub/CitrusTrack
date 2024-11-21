@@ -2,10 +2,7 @@ package com.example.citron.domaine;
 
 import com.example.citron.domaine.enums.Season;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +11,8 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Harvest {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,8 +23,6 @@ public class Harvest {
     @Enumerated(EnumType.STRING)
     private Season season;
 
-    private Integer year;
-
     private Double totalQuantity;
 
     @ManyToOne
@@ -35,8 +30,4 @@ public class Harvest {
 
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails;
-
-    @OneToMany(mappedBy = "harvest")
-    private List<Sales> sales;
-
 }

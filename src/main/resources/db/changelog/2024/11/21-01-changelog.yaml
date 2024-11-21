@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1731853987175-1
+      id: 1732199917033-1
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -27,7 +27,7 @@ databaseChangeLog:
                   type: DATE
             tableName: farm
   - changeSet:
-      id: 1731853987175-2
+      id: 1732199917033-2
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -48,7 +48,7 @@ databaseChangeLog:
                   type: UUID
             tableName: field
   - changeSet:
-      id: 1731853987175-3
+      id: 1732199917033-3
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -68,9 +68,6 @@ databaseChangeLog:
                   name: season
                   type: VARCHAR(255)
               - column:
-                  name: year
-                  type: INT
-              - column:
                   name: total_quantity
                   type: DOUBLE
               - column:
@@ -78,7 +75,7 @@ databaseChangeLog:
                   type: UUID
             tableName: harvest
   - changeSet:
-      id: 1731853987175-4
+      id: 1732199917033-4
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -102,7 +99,7 @@ databaseChangeLog:
                   type: UUID
             tableName: harvest_detail
   - changeSet:
-      id: 1731853987175-5
+      id: 1732199917033-5
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -112,27 +109,27 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: pk_sales
+                    primaryKeyName: pk_sale
                   name: id
                   type: UUID
               - column:
                   name: sale_date
                   type: DATE
               - column:
-                  name: quantity
-                  type: DOUBLE
-              - column:
                   name: unit_price
                   type: DOUBLE
               - column:
-                  name: client
+                  name: quantity
+                  type: DOUBLE
+              - column:
+                  name: customer_name
                   type: VARCHAR(255)
               - column:
-                  name: harvest_id
+                  name: harvest_detail_id
                   type: UUID
-            tableName: sales
+            tableName: sale
   - changeSet:
-      id: 1731853987175-6
+      id: 1732199917033-6
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -153,7 +150,7 @@ databaseChangeLog:
                   type: UUID
             tableName: tree
   - changeSet:
-      id: 1731853987175-7
+      id: 1732199917033-7
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -164,7 +161,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: farm
   - changeSet:
-      id: 1731853987175-8
+      id: 1732199917033-8
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -175,7 +172,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: harvest
   - changeSet:
-      id: 1731853987175-9
+      id: 1732199917033-9
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -186,7 +183,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: tree
   - changeSet:
-      id: 1731853987175-10
+      id: 1732199917033-10
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -197,18 +194,18 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: farm
   - changeSet:
-      id: 1731853987175-11
+      id: 1732199917033-11
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: harvest_id
-            baseTableName: sales
-            constraintName: FK_SALES_ON_HARVEST
+            baseColumnNames: harvest_detail_id
+            baseTableName: sale
+            constraintName: FK_SALE_ON_HARVESTDETAIL
             referencedColumnNames: id
-            referencedTableName: harvest
+            referencedTableName: harvest_detail
   - changeSet:
-      id: 1731853987175-12
+      id: 1732199917033-12
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

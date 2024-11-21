@@ -4,6 +4,9 @@ import com.example.citron.domaine.Farm;
 import com.example.citron.repository.FarmRepository;
 import com.example.citron.service.FarmService;
 import com.example.citron.web.errors.farm.FarmNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -40,5 +43,12 @@ public class FarmServiceImpl implements FarmService {
         existingFarm.setTotalArea(farm.getTotalArea());
         return farmRepository.save(existingFarm);
     }
+
+
+    @Override
+    public Page<Farm> findAll(Pageable pageable) {
+        return farmRepository.findAll(pageable);
+    }
+
 
 }

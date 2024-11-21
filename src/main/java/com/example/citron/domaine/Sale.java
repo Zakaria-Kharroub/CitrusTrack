@@ -1,15 +1,12 @@
 package com.example.citron.domaine;
-import com.example.citron.domaine.Harvest;
 
-
-import com.example.citron.domaine.Tree;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -17,19 +14,23 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HarvestDetail {
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private LocalDate saleDate;
+
+    private Double unitPrice;
+
     private Double quantity;
 
-    @ManyToOne
-    private Harvest harvest;
+    private String customerName;
 
     @ManyToOne
-    private Tree tree;
+    private HarvestDetail harvestDetail;
 
-    @OneToMany(mappedBy = "harvestDetail")
-    private List<Sale> sales;
+    public Double calculateRevenue() {
+        return quantity * unitPrice;
+    }
 }

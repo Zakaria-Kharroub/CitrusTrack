@@ -5,6 +5,9 @@ import com.example.citron.service.FarmService;
 import com.example.citron.service.dto.FarmDTO;
 import com.example.citron.web.vm.FarmVM;
 import com.example.citron.web.vm.mapper.FarmMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +47,17 @@ public class FarmController {
         FarmDTO farmDTO = farmMapper.toDTO(updatedFarm);
         return ResponseEntity.ok(farmDTO);
     }
+
+
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<FarmDTO>> findAllPaged(@RequestParam int page, @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Farm> farmPage = farmService.findAll(pageable);
+        Page<FarmDTO> farmDTOPage = farmPage.map(farmMapper::toDTO);
+        return ResponseEntity.ok(farmDTOPage);
+    }
+
 
 
 
