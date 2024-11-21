@@ -5,6 +5,7 @@ import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
+import com.example.citron.web.errors.harvest.DuplicateSeasonHarvestException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,12 @@ public class GlobalExceptionHandler {
 //    tree
     @ExceptionHandler(NoSpaceException.class)
     public ResponseEntity<String> handleNoSpaceException(NoSpaceException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+//    harvest
+    @ExceptionHandler(DuplicateSeasonHarvestException.class)
+    public ResponseEntity<String> handleDuplicateSeasonHarvestException(DuplicateSeasonHarvestException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
 }
