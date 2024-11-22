@@ -1,10 +1,7 @@
 package com.example.citron.domaine;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -19,18 +16,12 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private LocalDate saleDate;
+    private LocalDate dateVente;
+    private Double prixUnitaire;
 
-    private Double unitPrice;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "harvest_id")
+    private Harvest harvest;
 
-    private Double quantity;
-
-    private String customerName;
-
-    @ManyToOne
-    private HarvestDetail harvestDetail;
-
-    public Double calculateRevenue() {
-        return quantity * unitPrice;
-    }
+    private String client;
 }

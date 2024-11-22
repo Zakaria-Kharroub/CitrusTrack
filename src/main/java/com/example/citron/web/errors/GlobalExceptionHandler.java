@@ -57,9 +57,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
-//    harvest
+//    harevst
     @ExceptionHandler(DuplicateSeasonHarvestException.class)
     public ResponseEntity<String> handleDuplicateSeasonHarvestException(DuplicateSeasonHarvestException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
+
 }

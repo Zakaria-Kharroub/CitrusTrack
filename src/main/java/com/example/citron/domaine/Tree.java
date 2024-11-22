@@ -1,10 +1,7 @@
 package com.example.citron.domaine;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -24,33 +21,28 @@ public class Tree {
     private LocalDate plantingDate;
 
     @ManyToOne
+    @JoinColumn(name = "field_id")
     private Field field;
 
     @OneToMany(mappedBy = "tree")
     private List<HarvestDetail> harvestDetails;
 
-
-
-    public int calculAge(){
-        if (plantingDate == null){
+    public int calculAge() {
+        if (plantingDate == null) {
             return 0;
         }
-        return Period.between(plantingDate,LocalDate.now()).getYears();
+        return Period.between(plantingDate, LocalDate.now()).getYears();
     }
 
-    public double calculPrductivite(){
+    public double calculPrductivite() {
         int age = calculAge();
-        if (age <3){
+        if (age < 3) {
             return 2.5;
-        } else if (age <=10) {
+        } else if (age <= 10) {
             return 12.0;
-        } else if (age <=20) {
+        } else if (age <= 20) {
             return 20.0;
         }
         return 0;
     }
-
-
-
-
 }

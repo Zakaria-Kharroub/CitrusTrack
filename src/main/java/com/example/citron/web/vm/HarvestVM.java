@@ -10,5 +10,5 @@ import java.util.UUID;
 public class HarvestVM {
     private LocalDate harvestDate;
     private Season season;
-    private UUID farmId;
+    private UUID fieldId;
 }

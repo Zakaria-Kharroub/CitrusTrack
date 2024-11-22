@@ -1,10 +1,7 @@
 package com.example.citron.domaine;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,9 +19,9 @@ public class Field {
     private Double area;
 
     @ManyToOne
+    @JoinColumn(name = "farm_id")
     private Farm farm;
 
     @OneToMany(mappedBy = "field")
     private List<Tree> trees;
-
 }

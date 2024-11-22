@@ -18,16 +18,15 @@ public class Harvest {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private LocalDate harvestDate;
-
     @Enumerated(EnumType.STRING)
-    private Season season;
+    private Season saison;
 
-    private Double totalQuantity;
-
-    @ManyToOne
-    private Farm farm;
+    private LocalDate dateRecolte;
+    private Double quantiteTotale;
 
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails;
+
+    @OneToMany(mappedBy = "harvest")
+    private List<Sale> sales;
 }
