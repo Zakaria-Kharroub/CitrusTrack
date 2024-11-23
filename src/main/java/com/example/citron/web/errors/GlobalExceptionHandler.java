@@ -6,6 +6,7 @@ import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
 import com.example.citron.web.errors.harvest.DuplicateSeasonHarvestException;
+import com.example.citron.web.errors.harvest.HarvestNotFoundException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,6 +62,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateSeasonHarvestException.class)
     public ResponseEntity<String> handleDuplicateSeasonHarvestException(DuplicateSeasonHarvestException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HarvestNotFoundException.class)
+    public ResponseEntity<String> handleHarvestNotFoundException(HarvestNotFoundException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
 
 }

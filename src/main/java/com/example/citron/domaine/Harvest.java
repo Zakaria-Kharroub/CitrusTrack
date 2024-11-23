@@ -25,13 +25,9 @@ public class Harvest {
     private LocalDate dateRecolte;
     private Double quantiteTotale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "field_id")
-    private Field field;
 
     @OneToMany(mappedBy = "harvest", fetch = FetchType.LAZY)
     private List<HarvestDetail> harvestDetails = new ArrayList<>();
 
-    @OneToMany(mappedBy = "harvest")
-    private List<Sale> sales;
+
 }

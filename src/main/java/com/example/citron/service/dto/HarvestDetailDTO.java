@@ -9,5 +9,5 @@ public class HarvestDetailDTO {
     private UUID id;
     private UUID harvestId;
     private UUID treeId;
-    private Double quantity;
+    private Float collectedQuantity;
 }

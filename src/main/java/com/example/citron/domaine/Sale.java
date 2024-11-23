@@ -19,7 +19,7 @@ public class Sale {
     private LocalDate dateVente;
     private Double prixUnitaire;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "harvest_id")
     private Harvest harvest;
 
