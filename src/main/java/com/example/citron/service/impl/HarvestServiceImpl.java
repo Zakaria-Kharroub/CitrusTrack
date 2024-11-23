@@ -15,6 +15,7 @@ import com.example.citron.web.errors.harvest.DuplicateSeasonHarvestException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,25 +40,41 @@ public class HarvestServiceImpl implements HarvestService {
     @Transactional
     public Harvest save(Harvest harvest) {
         Field field = fieldRepository.findById(harvest.getField().getId())
-                .orElseThrow(() -> new FieldNotFoundException("fied not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Field not found"));
+        harvest.setField(field);
 
-        // check for deja harvest in this season
-        if (harvestRepository.existsByFieldIdAndSaison(harvest.getField().getId(), harvest.getSaison())) {
-            throw new DuplicateSeasonHarvestException("deja harvest on this season");
+        if (harvestRepository.existsByFieldIdAndSaison(field.getId(), harvest.getSaison())) {
+            throw new DuplicateSeasonHarvestException("Harvest already exists for this season");
         }
+
+//        save harvest d'abord
+        harvest.setQuantiteTotale(0.0);
+        Harvest savedHarvest = harvestRepository.save(harvest);
 
         List<Tree> trees = treeRepository.findByFieldId(field.getId());
-        double totalQuantity = 0;
+        double totalQuantity = 0.0;
+        List<HarvestDetail> harvestDetails = new ArrayList<>();
 
         for (Tree tree : trees) {
-            HarvestDetail harvestDetail = harvestDetailService.createHarvestDetail(tree, harvest);
-            if (harvestDetail != null) {
-                totalQuantity += harvestDetail.getQuantite();
+            HarvestDetail harvestDetail = new HarvestDetail();
+            harvestDetail.setHarvest(savedHarvest);
+            harvestDetail.setTree(tree);
+
+            if (tree.calculAge() > 20) {
+                continue;
             }
+
+            // Calculate quantity based on tree productivity
+            double quantity = tree.calculPrductivite();
+            harvestDetail.setQuantite(quantity);
+            harvestDetails.add(harvestDetailRepository.save(harvestDetail));
+            totalQuantity += quantity;
         }
 
-        harvest.setQuantiteTotale(totalQuantity);
-        return harvestRepository.save(harvest);
+//update quantite total
+        savedHarvest.setQuantiteTotale(totalQuantity);
+        savedHarvest.setHarvestDetails(harvestDetails);
+        return harvestRepository.save(savedHarvest);
     }
 
     @Override

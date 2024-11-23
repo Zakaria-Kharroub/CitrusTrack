@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,12 +25,12 @@ public class Harvest {
     private LocalDate dateRecolte;
     private Double quantiteTotale;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id")
     private Field field;
 
-    @OneToMany(mappedBy = "harvest")
-    private List<HarvestDetail> harvestDetails;
+    @OneToMany(mappedBy = "harvest", fetch = FetchType.LAZY)
+    private List<HarvestDetail> harvestDetails = new ArrayList<>();
 
     @OneToMany(mappedBy = "harvest")
     private List<Sale> sales;
