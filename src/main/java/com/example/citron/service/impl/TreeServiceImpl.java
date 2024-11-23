@@ -9,6 +9,10 @@ import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class TreeServiceImpl implements TreeService {
 
@@ -39,5 +43,17 @@ public class TreeServiceImpl implements TreeService {
 
         tree.setField(field);
         return treeRepository.save(tree);
+    }
+
+    @Override
+    public double calculateProductivity(UUID treeId) {
+        Tree tree = treeRepository.findById(treeId)
+                .orElseThrow(() -> new IllegalArgumentException("Tree not found with ID: " + treeId));
+        return tree.calculateProductivity();
+    }
+
+    @Override
+    public List<Tree> findByFieldId(UUID fieldId) {
+        return treeRepository.findByFieldId(fieldId);
     }
 }

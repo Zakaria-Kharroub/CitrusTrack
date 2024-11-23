@@ -18,5 +18,6 @@ public class Sales {
     private String client;
 
     @ManyToOne
+    @JoinColumn(name = "harvest_id", nullable = false)
     private Harvest harvest;
 }

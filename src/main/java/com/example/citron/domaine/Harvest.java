@@ -26,12 +26,7 @@ public class Harvest {
     @Enumerated(EnumType.STRING)
     private Season season;
 
-    private Integer year;
-
     private Double totalQuantity;
-
-    @ManyToOne
-    private Farm farm;
 
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails;
