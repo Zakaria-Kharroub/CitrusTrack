@@ -24,6 +24,10 @@ public class Harvest {
     private LocalDate dateRecolte;
     private Double quantiteTotale;
 
+    @ManyToOne
+    @JoinColumn(name = "field_id")
+    private Field field;
+
     @OneToMany(mappedBy = "harvest")
     private List<HarvestDetail> harvestDetails;
 

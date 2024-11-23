@@ -8,12 +8,14 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {HarvestDetailMapper.class})
 public interface HarvestMapper {
-    @Mapping(target = "farm.id", source = "farmId")
-    @Mapping(target = "totalQuantity", ignore = true)
+    @Mapping(target = "field.id", source = "fieldId")
+    @Mapping(target = "quantiteTotale", ignore = true)
     @Mapping(target = "harvestDetails", ignore = true)
+    @Mapping(target = "sales", ignore = true)
     Harvest toEntity(HarvestVM harvestVM);
 
-    @Mapping(target = "farmId", source = "farm.id")
+    @Mapping(target = "fieldId", source = "field.id")
+    @Mapping(target = "totalQuantity", source = "quantiteTotale")
     @Mapping(target = "harvestDetails", source = "harvestDetails")
     HarvestDTO toDTO(Harvest harvest);
 }

@@ -7,10 +7,10 @@ import com.example.citron.web.vm.TreeVM;
 import com.example.citron.web.vm.mapper.TreeMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/tree")
@@ -32,5 +32,11 @@ public class TreeController {
         return new ResponseEntity<>(treeDTO, HttpStatus.CREATED);
     }
 
+    @GetMapping("/field/{fieldId}")
+    public ResponseEntity<List<TreeDTO>> findByFieldId(@PathVariable UUID fieldId) {
+        List<Tree> trees = treeService.findByFieldId(fieldId);
+        List<TreeDTO> treeDTOs = trees.stream().map(treeMapper::toDTO).toList();
+        return new ResponseEntity<>(treeDTOs, HttpStatus.OK);
+    }
 
 }

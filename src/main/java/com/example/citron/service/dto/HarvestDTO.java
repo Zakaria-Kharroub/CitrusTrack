@@ -10,11 +10,9 @@ import java.util.UUID;
 @Data
 public class HarvestDTO {
     private UUID id;
-    private LocalDate harvestDate;
-    private Season season;
+    private LocalDate dateRecolte;
+    private Season saison;
+    private UUID fieldId;
     private Double totalQuantity;
-    private UUID farmId;
     private List<HarvestDetailDTO> harvestDetails;
-
-
 }
