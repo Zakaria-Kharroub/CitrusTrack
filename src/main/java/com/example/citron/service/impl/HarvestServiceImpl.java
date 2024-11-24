@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,6 +38,11 @@ public class HarvestServiceImpl implements HarvestService {
         this.fieldService = fieldService;
     }
 
+
+    @Override
+    public Optional<Harvest> findById(UUID id) {
+        return harvestRepository.findById(id);
+    }
 
     @Override
     public Harvest harvestField(LocalDate harvestDate, UUID fieldId) {
