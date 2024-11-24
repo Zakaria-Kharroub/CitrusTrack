@@ -11,4 +11,6 @@ public interface HarvestService {
 
     Harvest harvestField(LocalDate harvestDate, UUID fieldId);
     Optional<Harvest> findById(UUID id);
+    Harvest save(Harvest harvest);
+
 }

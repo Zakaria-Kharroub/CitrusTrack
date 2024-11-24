@@ -1,14 +1,44 @@
 package com.example.citron.service.impl;
 
+import com.example.citron.domaine.Harvest;
+import com.example.citron.domaine.Sales;
 import com.example.citron.repository.SalesRepository;
+import com.example.citron.service.HarvestService;
 import com.example.citron.service.SalesService;
+import com.example.citron.web.errors.harvest.HarvestNotFoundException;
+import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
+import org.springframework.stereotype.Service;
 
-public class SalesServiceImpl {
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class SalesServiceImpl implements SalesService {
 
     private final SalesRepository salesRepository;
+    private final HarvestService harvestService;
 
-    public SalesServiceImpl(SalesRepository salesRepository) {
+    public SalesServiceImpl(SalesRepository salesRepository, HarvestService harvestService) {
         this.salesRepository = salesRepository;
+        this.harvestService = harvestService;
     }
 
+    @Override
+    public Sales save(Sales sales, UUID harvestId) {
+        Optional<Harvest> harvest = harvestService.findById(harvestId);
+        if (harvest.isEmpty()) {
+            throw new HarvestNotFoundException("Harvest not found");
+        }
+
+        Harvest existingHarvest = harvest.get();
+        if (sales.getQuantity() > existingHarvest.getTotalQuantity()) {
+            throw new SalesQteExceedsHarvestQteException("sales qte exceeds harvest total quantity");
+        }
+
+        existingHarvest.setTotalQuantity(existingHarvest.getTotalQuantity() - sales.getQuantity());
+        harvestService.save(existingHarvest);
+
+        sales.setHarvest(existingHarvest);
+        return salesRepository.save(sales);
+    }
 }

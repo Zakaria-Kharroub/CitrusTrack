@@ -11,4 +11,5 @@ public class SalesDTO {
     private Double quantity;
     private Double unitPrice;
     private String client;
+    private UUID harvestId;
 }

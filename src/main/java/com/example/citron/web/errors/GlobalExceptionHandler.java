@@ -8,6 +8,7 @@ import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaExceptio
 import com.example.citron.web.errors.harvest.HarvestExistInSeasonException;
 import com.example.citron.web.errors.harvest.HarvestNotFoundException;
 import com.example.citron.web.errors.harvest.NoTreesAviableToHarvestException;
+import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,4 +77,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleHarvestNotFoundException(HarvestNotFoundException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
+
+//    sales
+    @ExceptionHandler(SalesQteExceedsHarvestQteException.class)
+    public ResponseEntity<String> handleSalesQteExceedsHarvestQteException(SalesQteExceedsHarvestQteException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
 }
+
