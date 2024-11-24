@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1731853987175-1
+      id: 1732397643411-1
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -27,7 +27,7 @@ databaseChangeLog:
                   type: DATE
             tableName: farm
   - changeSet:
-      id: 1731853987175-2
+      id: 1732397643411-2
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -44,11 +44,13 @@ databaseChangeLog:
                   name: area
                   type: DOUBLE
               - column:
+                  constraints:
+                    nullable: false
                   name: farm_id
                   type: UUID
             tableName: field
   - changeSet:
-      id: 1731853987175-3
+      id: 1732397643411-3
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -68,17 +70,11 @@ databaseChangeLog:
                   name: season
                   type: VARCHAR(255)
               - column:
-                  name: year
-                  type: INT
-              - column:
                   name: total_quantity
                   type: DOUBLE
-              - column:
-                  name: farm_id
-                  type: UUID
             tableName: harvest
   - changeSet:
-      id: 1731853987175-4
+      id: 1732397643411-4
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -95,6 +91,8 @@ databaseChangeLog:
                   name: quantity
                   type: DOUBLE
               - column:
+                  constraints:
+                    nullable: false
                   name: harvest_id
                   type: UUID
               - column:
@@ -102,7 +100,7 @@ databaseChangeLog:
                   type: UUID
             tableName: harvest_detail
   - changeSet:
-      id: 1731853987175-5
+      id: 1732397643411-5
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -128,11 +126,13 @@ databaseChangeLog:
                   name: client
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: harvest_id
                   type: UUID
             tableName: sales
   - changeSet:
-      id: 1731853987175-6
+      id: 1732397643411-6
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -153,7 +153,7 @@ databaseChangeLog:
                   type: UUID
             tableName: tree
   - changeSet:
-      id: 1731853987175-7
+      id: 1732397643411-7
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -164,7 +164,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: farm
   - changeSet:
-      id: 1731853987175-8
+      id: 1732397643411-8
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -175,7 +175,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: harvest
   - changeSet:
-      id: 1731853987175-9
+      id: 1732397643411-9
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -186,18 +186,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: tree
   - changeSet:
-      id: 1731853987175-10
-      author: Youcode (generated)
-      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: farm_id
-            baseTableName: harvest
-            constraintName: FK_HARVEST_ON_FARM
-            referencedColumnNames: id
-            referencedTableName: farm
-  - changeSet:
-      id: 1731853987175-11
+      id: 1732397643411-10
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -208,7 +197,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: harvest
   - changeSet:
-      id: 1731853987175-12
+      id: 1732397643411-11
       author: Youcode (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

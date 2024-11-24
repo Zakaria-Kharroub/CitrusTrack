@@ -33,8 +33,8 @@ public class FieldServiceImpl implements FieldService {
             throw new FarmNotFoundException("farm not found");
         }
 
-        if (farm.getFields().size()>10){
-            throw new FarmFieldLimitException("farm contein pas plus de 10 fields");
+        if (farm.getFields().size() >= 10){
+            throw new FarmFieldLimitException("farm cannot contain more than 10 fields");
         }
 
         if(field.getArea() > farm.getTotalArea() *0.5){

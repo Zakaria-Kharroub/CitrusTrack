@@ -38,6 +38,14 @@ public class Tree {
         return Period.between(plantingDate,LocalDate.now()).getYears();
     }
 
+    public double calculateProductivity() {
+        int age = calculAge();
+        if (age > 20) return 0.0;
+        if (age < 3) return 2.5;
+        else if (age <= 10) return 12.0;
+        else return 20.0;
+    }
+
 
 
 
