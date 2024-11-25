@@ -11,4 +11,9 @@ public interface FarmService {
     Farm update(UUID id, Farm farm);
 
     Optional<Farm> search(Farm farm);
+
+    void deleteById(UUID id);
+
+
+
 }

@@ -7,10 +7,9 @@ import com.example.citron.web.vm.TreeVM;
 import com.example.citron.web.vm.mapper.TreeMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/tree")
@@ -30,6 +29,12 @@ public class TreeController {
         Tree savedTree = treeService.save(tree);
         TreeDTO treeDTO = treeMapper.toDTO(savedTree);
         return new ResponseEntity<>(treeDTO, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTree(@PathVariable UUID id){
+        treeService.deleteById(id);
+        return ResponseEntity.ok("tree deleted");
     }
 
 

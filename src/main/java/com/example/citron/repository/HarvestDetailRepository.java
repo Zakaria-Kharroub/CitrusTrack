@@ -26,4 +26,7 @@ public interface HarvestDetailRepository extends JpaRepository<HarvestDetail, In
     void deleteById(UUID id);
 
     Optional<Object> findById(UUID harvestDetailId);
+
+    void deleteByTreeId(UUID treeId);
+
 }
