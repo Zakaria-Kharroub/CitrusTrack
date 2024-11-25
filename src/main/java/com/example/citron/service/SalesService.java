@@ -5,5 +5,5 @@ import com.example.citron.domaine.Sales;
 import java.util.UUID;
 
 public interface SalesService {
-    Sales save(Sales sales, UUID harvestId);
+    Sales save(Sales sales);
 }

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/sales")
@@ -24,10 +23,10 @@ public class SalesController {
         this.salesMapper = salesMapper;
     }
 
-    @PostMapping("/save/{harvestId}")
-    public ResponseEntity<SalesDTO> save(@Valid @RequestBody SalesVM salesVM, @PathVariable UUID harvestId) {
+    @PostMapping("/save")
+    public ResponseEntity<SalesDTO> save(@Valid @RequestBody SalesVM salesVM) {
         Sales sales = salesMapper.toEntity(salesVM);
-        Sales savedSales = salesService.save(sales, harvestId);
+        Sales savedSales = salesService.save(sales);
         SalesDTO salesDTO = salesMapper.toDTO(savedSales);
         return new ResponseEntity<>(salesDTO, HttpStatus.CREATED);
     }

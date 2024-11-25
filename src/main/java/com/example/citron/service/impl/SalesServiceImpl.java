@@ -10,7 +10,6 @@ import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class SalesServiceImpl implements SalesService {
@@ -24,8 +23,8 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
-    public Sales save(Sales sales, UUID harvestId) {
-        Optional<Harvest> harvest = harvestService.findById(harvestId);
+    public Sales save(Sales sales) {
+        Optional<Harvest> harvest = harvestService.findById(sales.getHarvest().getId());
         if (harvest.isEmpty()) {
             throw new HarvestNotFoundException("Harvest not found");
         }
