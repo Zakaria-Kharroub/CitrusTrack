@@ -25,4 +25,11 @@ public class Sales {
     @ManyToOne
     @JoinColumn(name = "harvest_id", nullable = false)
     private Harvest harvest;
+
+
+//    @PrePersist
+//    @PreUpdate
+//    public void calculateRevenue() {
+//        this.revenue = this.quantity * this.unitPrice;
+//    }
 }

@@ -3,6 +3,7 @@ package com.example.citron.web.rest;
 import com.example.citron.domaine.Farm;
 import com.example.citron.service.FarmService;
 import com.example.citron.service.dto.FarmDTO;
+import com.example.citron.web.vm.FarmSearchVM;
 import com.example.citron.web.vm.FarmVM;
 import com.example.citron.web.vm.mapper.FarmMapper;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,17 @@ public class FarmController {
         Farm updatedFarm = farmService.update(id,farm);
         FarmDTO farmDTO = farmMapper.toDTO(updatedFarm);
         return ResponseEntity.ok(farmDTO);
+    }
+
+
+    @PostMapping("/search")
+    public ResponseEntity<FarmDTO> search(@RequestBody FarmSearchVM farmSearchVM){
+        Farm farm = farmMapper.toEntity(farmSearchVM);
+        Farm searchedFarm = farmService.search(farm)
+                .orElseThrow(()->new RuntimeException("farm not found"));
+        FarmDTO farmDTO = farmMapper.toDTO(searchedFarm);
+        return ResponseEntity.ok(farmDTO);
+
     }
 
 
