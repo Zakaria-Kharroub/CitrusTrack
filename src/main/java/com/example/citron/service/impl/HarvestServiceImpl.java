@@ -13,11 +13,13 @@ import com.example.citron.service.TreeService;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.harvest.HarvestExistInSeasonException;
 import com.example.citron.web.errors.harvest.NoTreesAviableToHarvestException;
+import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,6 +41,18 @@ public class HarvestServiceImpl implements HarvestService {
 
 
     @Override
+    public Optional<Harvest> findById(UUID id) {
+        return harvestRepository.findById(id);
+    }
+
+
+    @Override
+    public Harvest save(Harvest harvest) {
+        return harvestRepository.save(harvest);
+    }
+
+
+    @Override
     public Harvest harvestField(LocalDate harvestDate, UUID fieldId) {
         validateHarvestYear(harvestDate);
         Field field = validateFieldExistence(fieldId);
@@ -47,7 +61,7 @@ public class HarvestServiceImpl implements HarvestService {
         List<HarvestDetail> harvestDetails = createHarvestDetailsForTrees(trees, harvestDate);
 
         if (harvestDetails.isEmpty()) {
-            throw new IllegalArgumentException("No valid trees found for harvesting in the field.");
+            throw new SalesQteExceedsHarvestQteException("No valid trees found for harvesting in the field.");
         }
 
         double totalQuantity = harvestDetails.stream()
