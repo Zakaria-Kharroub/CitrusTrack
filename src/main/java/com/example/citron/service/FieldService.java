@@ -1,7 +1,6 @@
 package com.example.citron.service;
 
 import com.example.citron.domaine.Field;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 

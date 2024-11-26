@@ -27,9 +27,4 @@ public class Sales {
     private Harvest harvest;
 
 
-//    @PrePersist
-//    @PreUpdate
-//    public void calculateRevenue() {
-//        this.revenue = this.quantity * this.unitPrice;
-//    }
 }

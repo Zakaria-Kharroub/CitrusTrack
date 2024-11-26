@@ -24,7 +24,5 @@ public class FarmVM {
     @Positive(message = "totalArea must be positive")
     Double totalArea;
 
-    @NotNull(message = "creationDate obligatoire")
-    @NotBlank(message = "creationDate must be not empty")
     LocalDate creationDate;
 }
