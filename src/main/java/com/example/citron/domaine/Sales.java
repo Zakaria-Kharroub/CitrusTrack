@@ -25,4 +25,6 @@ public class Sales {
     @ManyToOne
     @JoinColumn(name = "harvest_id", nullable = false)
     private Harvest harvest;
+
+
 }
