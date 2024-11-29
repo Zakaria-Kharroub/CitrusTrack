@@ -15,4 +15,5 @@ public interface TreeService {
     double calculateProductivity(UUID treeId);
 
     List<Tree> findByFieldId(UUID fieldId);
+    void deleteById(UUID id);
 }

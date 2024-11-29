@@ -7,10 +7,10 @@ import com.example.citron.web.vm.HarvestVM;
 import com.example.citron.web.vm.mapper.HarvestMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/harvest")
@@ -30,4 +30,16 @@ public class HarvestController {
         HarvestDTO harvestDTO = harvestMapper.toDTO(harvest);
         return ResponseEntity.ok().body(harvestDTO);
     }
+
+ @GetMapping("/find/{id}")
+public ResponseEntity<HarvestDTO> findById(@PathVariable UUID id) {
+    Optional<Harvest> harvest = harvestService.findById(id);
+    if (harvest.isPresent()) {
+        HarvestDTO harvestDTO = harvestMapper.toDTO(harvest.get());
+        return ResponseEntity.ok().body(harvestDTO);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+
 }

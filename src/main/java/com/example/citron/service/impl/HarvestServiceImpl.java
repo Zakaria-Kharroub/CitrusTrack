@@ -13,11 +13,13 @@ import com.example.citron.service.TreeService;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.harvest.HarvestExistInSeasonException;
 import com.example.citron.web.errors.harvest.NoTreesAviableToHarvestException;
+import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,6 +41,18 @@ public class HarvestServiceImpl implements HarvestService {
 
 
     @Override
+    public Optional<Harvest> findById(UUID id) {
+        return harvestRepository.findById(id);
+    }
+
+
+    @Override
+    public Harvest save(Harvest harvest) {
+        return harvestRepository.save(harvest);
+    }
+
+
+    @Override
     public Harvest harvestField(LocalDate harvestDate, UUID fieldId) {
         validateHarvestYear(harvestDate);
         Field field = validateFieldExistence(fieldId);
@@ -47,7 +61,7 @@ public class HarvestServiceImpl implements HarvestService {
         List<HarvestDetail> harvestDetails = createHarvestDetailsForTrees(trees, harvestDate);
 
         if (harvestDetails.isEmpty()) {
-            throw new IllegalArgumentException("No valid trees found for harvesting in the field.");
+            throw new SalesQteExceedsHarvestQteException("no valid trees found for harvesting in the field.");
         }
 
         double totalQuantity = harvestDetails.stream()
@@ -69,14 +83,14 @@ public class HarvestServiceImpl implements HarvestService {
     private void validateHarvestYear(LocalDate harvestDate) {
         int currentYear = LocalDate.now().getYear();
         if (harvestDate.getYear() != currentYear) {
-            throw new IllegalArgumentException("Harvest year must be the current year.");
+            throw new IllegalArgumentException("harevt year must be the current year");
         }
     }
 
     private Field validateFieldExistence(UUID fieldId) {
         Field field =  fieldService.findById(String.valueOf(fieldId));
         if (field == null) {
-                throw new FieldNotFoundException("Field not found with id: ");
+                throw new FieldNotFoundException("fild not found ");
         }else {
             return field;
         }
@@ -131,7 +145,7 @@ public class HarvestServiceImpl implements HarvestService {
         } else if (month >= 6 && month <= 8) {
             return Season.SUMMER;
         } else if (month >= 9 && month <= 11) {
-            return Season.FALL;
+            return Season.AUTUMN;
         } else {
             return Season.WINTER;
         }

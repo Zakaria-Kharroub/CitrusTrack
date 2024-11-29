@@ -1,11 +1,16 @@
 package com.example.citron.domaine;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Sales {
 
     @Id
@@ -20,4 +25,6 @@ public class Sales {
     @ManyToOne
     @JoinColumn(name = "harvest_id", nullable = false)
     private Harvest harvest;
+
+
 }

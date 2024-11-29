@@ -2,7 +2,10 @@ package com.example.citron;
 
 import com.example.citron.domaine.Farm;
 import com.example.citron.domaine.Field;
+import com.example.citron.repository.FarmRepository;
 import com.example.citron.repository.FieldRepository;
+import com.example.citron.repository.HarvestDetailRepository;
+import com.example.citron.repository.TreeRepository;
 import com.example.citron.service.FarmService;
 import com.example.citron.service.FieldService;
 import com.example.citron.service.impl.FieldServiceImpl;
@@ -35,6 +38,12 @@ public class FieldServiceTest {
     private FieldRepository fieldRepository;
 
     @Mock
+    private HarvestDetailRepository harvestDetailRepository;
+    @Mock
+    private TreeRepository treeRepository;
+
+
+    @Mock
     private FarmService farmService;
 
     private FieldService fieldService;
@@ -46,8 +55,8 @@ public class FieldServiceTest {
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        fieldService = new FieldServiceImpl(fieldRepository,farmService);
-        // initials farm test
+        fieldService = new FieldServiceImpl(fieldRepository,farmService,harvestDetailRepository,treeRepository);
+        // initials farm
         testFarm = new Farm();
         testFarm.setId(FARM_ID);
         testFarm.setTotalArea(100.0);

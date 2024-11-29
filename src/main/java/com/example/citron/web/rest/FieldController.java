@@ -48,6 +48,13 @@ public class FieldController {
         return ResponseEntity.ok(fieldDTO);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteField(@PathVariable UUID id){
+        fieldService.deleteById(id);
+        return ResponseEntity.ok("field deleted succse");
+    }
+
+
 
 
 

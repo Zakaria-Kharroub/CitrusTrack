@@ -6,10 +6,13 @@ import com.example.citron.web.errors.field.FieldAreaSuperieurCinquanteException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.field.TotalFieldAreaExceedsFarmAreaException;
 import com.example.citron.web.errors.harvest.HarvestExistInSeasonException;
+import com.example.citron.web.errors.harvest.HarvestNotFoundException;
 import com.example.citron.web.errors.harvest.NoTreesAviableToHarvestException;
+import com.example.citron.web.errors.sales.SalesQteExceedsHarvestQteException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,12 +29,21 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(FarmFieldLimitException.class)
     public ResponseEntity<Map<String,String>> handleFarmFieldLimitException(FarmFieldLimitException ex){
         Map<String,String> errorResponse = new HashMap<>();
         errorResponse.put("message",ex.getMessage());
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+
+//    validation
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errorResponse.put(error.getField(), error.getDefaultMessage())
+        );
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 //    Field
@@ -66,8 +78,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler(NoTreesAviableToHarvestException.class)
     public ResponseEntity<String> handleNoTreesAviableToHarvestException(NoTreesAviableToHarvestException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(HarvestNotFoundException.class)
+    public ResponseEntity<String> handleHarvestNotFoundException(HarvestNotFoundException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+//    sales
+    @ExceptionHandler(SalesQteExceedsHarvestQteException.class)
+    public ResponseEntity<String> handleSalesQteExceedsHarvestQteException(SalesQteExceedsHarvestQteException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
 }
+

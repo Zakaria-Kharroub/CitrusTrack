@@ -2,9 +2,11 @@ package com.example.citron.service.impl;
 
 import com.example.citron.domaine.Field;
 import com.example.citron.domaine.Tree;
+import com.example.citron.repository.HarvestDetailRepository;
 import com.example.citron.repository.TreeRepository;
 import com.example.citron.service.FieldService;
 import com.example.citron.service.TreeService;
+import com.example.citron.web.errors.farm.FarmNotFoundException;
 import com.example.citron.web.errors.field.FieldNotFoundException;
 import com.example.citron.web.errors.tree.NoSpaceException;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,13 @@ public class TreeServiceImpl implements TreeService {
 
     private final FieldService fieldService;
     private final TreeRepository treeRepository;
+    private final HarvestDetailRepository harvestDetailRepository;
 
-    public TreeServiceImpl(FieldService fieldService, TreeRepository treeRepository) {
+    public TreeServiceImpl(FieldService fieldService, TreeRepository treeRepository,
+                           HarvestDetailRepository harvestDetailRepository) {
         this.fieldService = fieldService;
         this.treeRepository = treeRepository;
+        this.harvestDetailRepository = harvestDetailRepository;
     }
 
     @Override
@@ -56,4 +61,16 @@ public class TreeServiceImpl implements TreeService {
     public List<Tree> findByFieldId(UUID fieldId) {
         return treeRepository.findByFieldId(fieldId);
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        Tree tree = treeRepository.findById(id)
+                .orElseThrow(()->new FarmNotFoundException("tree not found"));
+
+        harvestDetailRepository.deleteByTreeId(tree.getId());
+        treeRepository.delete(tree);
+
+    }
+
+
 }
