@@ -18,7 +18,7 @@ public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
+//id, name, area, farm, trees
 
     private Double area;
 
